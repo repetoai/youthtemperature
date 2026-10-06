@@ -7,7 +7,8 @@
 index.html      사이트 본체 (온도의 들판, 다섯 목소리, 온도 재기, 온도 남기기, 책 소개)
 episodes.js   에피소드 54편 — 온도·제목·전문. 온도나 문장을 고치려면 이 파일만 수정
 cover.jpg       표지 일러스트
-api/notes.js    온도 남기기 저장·조회 API (Upstash Redis)
+api/notes.js    온도 남기기 저장·조회·삭제 API (Upstash Redis)
+admin.html      관리자 페이지 — 기록 전체 보기, 검색, 삭제, CSV 내보내기
 ```
 
 ## 배포하기 (약 10분)
@@ -41,14 +42,24 @@ api/notes.js    온도 남기기 저장·조회 API (Upstash Redis)
 > Upstash 무료 플랜은 하루 1만 요청까지 가능하며, 이 사이트는 방문자당 30초에 1번 조회하므로 충분합니다.
 > 기록은 최신 500건까지 보관하고, 같은 IP는 20초에 1건만 남길 수 있습니다.
 
-### 4. 도메인 연결 (선택)
+### 4. 관리자 페이지 켜기
+1. Vercel 프로젝트 → **Settings → Environment Variables** 에서
+   - Key: `ADMIN_TOKEN`
+   - Value: 관리자 비밀번호 (길고 추측하기 어려운 문자열 권장)
+   를 추가하고 **Save** 합니다.
+2. **Deployments → ⋯ → Redeploy** 를 한 번 눌러줍니다.
+3. `https://<주소>/admin.html` 을 열고 비밀번호를 입력하면, 남겨진 기록 전체를 보고 부적절한 글을 삭제하거나 CSV로 내려받을 수 있습니다.
+
+> `ADMIN_TOKEN` 을 설정하지 않으면 관리자 기능은 모두 막혀 있어 안전합니다. 관리자 주소와 비밀번호는 운영진만 공유하세요.
+
+### 5. 도메인 연결 (선택)
 Vercel 프로젝트 → **Settings → Domains** 에서 보유한 도메인을 추가하고, 안내대로 DNS를 설정하면 됩니다.
 
 ## 수정하기
 - **에피소드 온도·제목·본문**: `episodes.js` 을 고치고 GitHub에 커밋하면 Vercel이 자동으로 다시 배포합니다.
   - `t` 온도, `p` 책의 시작 쪽수, `title` 제목, `paras` 본문 (`p` 문단, `h` 소제목, `q` 장 앞 인용구)
 - **온도 재기 문항**: `index.html` 안의 `const Q=[ ... ]` 부분
-- **남긴 기록 지우기**: Vercel Storage 탭의 Upstash 콘솔에서 `ondo:notes` 키를 삭제
+- **남긴 기록 관리**: `admin.html` (위 4번). 전체를 한 번에 지우려면 Upstash 콘솔에서 `ondo:notes` 키를 삭제해도 됩니다
 
 ## 로컬에서 미리 보기
 ```bash
