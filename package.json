@@ -1,0 +1,10 @@
+{
+  "name": "cheongchun-ondo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "『청춘의 온도』 캠페인 사이트",
+  "type": "module",
+  "dependencies": {
+    "@upstash/redis": "^1.34.0"
+  }
+}

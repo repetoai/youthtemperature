@@ -1,0 +1,6 @@
+{
+  "headers": [
+    { "source": "/episodes.js", "headers": [{ "key": "Cache-Control", "value": "public, max-age=3600" }] },
+    { "source": "/cover.jpg", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] }
+  ]
+}
