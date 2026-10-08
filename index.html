@@ -32,7 +32,9 @@ img{max-width:100%;display:block}a{color:inherit}button{font:inherit;color:inher
 @media (prefers-reduced-motion:reduce){.grain{animation:none}}
 .tip{position:fixed;z-index:5;pointer-events:none;background:rgba(9,12,24,.82);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:13px;line-height:1.45;opacity:0;transform:translate(-50%,-100%) translateY(-16px);transition:opacity .15s;backdrop-filter:blur(8px);white-space:normal}
 .tip.on{opacity:1}.tip b{display:block;font-family:var(--serif);font-weight:700;font-size:14px;color:var(--cream)}.tip small{color:var(--cream-2)}.tip .tt{font-family:var(--serif);color:var(--tc);margin-right:6px}
-.amb{position:fixed;inset:0;z-index:4;pointer-events:none}
+.amb{position:fixed;inset:0;z-index:4;pointer-events:none;transition:opacity .6s}
+body.quiet .amb,body.quiet .thermo{opacity:0}
+.thermo{transition:opacity .6s}
 .amb-l{position:absolute;opacity:0;transition:opacity .7s;font-size:12px;line-height:1.4;width:max-content;max-width:270px;padding:8px 12px;border-radius:10px;background:rgba(9,12,24,.7);backdrop-filter:blur(8px);border:1px solid var(--line)}
 .amb-l.on{opacity:1}.amb-l.focus{position:fixed;z-index:5;border-color:var(--t)}.amb-l.l{text-align:right}.amb-l.u,.amb-l.d{text-align:center}
 .amb-l span{font-family:var(--serif);font-size:15px;display:block}.amb-l small{display:block;color:var(--cream-2);font-size:11px;white-space:nowrap}.amb-l b{display:block;font-family:var(--serif);font-weight:700;font-size:13px;color:var(--cream)}
@@ -59,19 +61,21 @@ h2{font-family:var(--serif);font-weight:400;font-size:clamp(26px,3.6vw,40px);lin
 .btn.pri{background:var(--t);border-color:transparent;color:#0b0e1a;font-weight:500;transition:background 1.2s}
 
 /* hero */
-.hero{align-content:end;padding-bottom:clamp(60px,12vh,120px)}
+.hero{position:relative;align-content:end;padding-bottom:clamp(60px,12vh,120px)}
 .hero .in{pointer-events:none;max-width:none;animation:rise 1.6s .6s cubic-bezier(.2,.7,.2,1) both}
 @keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.hero .in{animation:none}}
 .hero h1{font-family:var(--serif);font-weight:400;font-size:clamp(56px,11vw,148px);line-height:1.18;letter-spacing:.06em;color:var(--cream);text-shadow:0 0 40px rgba(239,233,220,.15)}
 .hero p{font-family:var(--serif);font-size:clamp(16px,2vw,22px);margin-top:20px;color:var(--cream)}
+.hero .buylink{display:inline-block;pointer-events:auto;margin-top:18px;font-size:13px;letter-spacing:.06em;color:var(--cream);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:8px 16px}.hero .buylink:hover{border-color:var(--cream)}
 .hero small{display:block;font-family:var(--sans);font-size:13px;color:var(--cream-2);margin-top:14px;transition:opacity .5s}
 .replay{pointer-events:auto;background:none;border:0;border-bottom:1px solid var(--line);padding:0;font-size:12px;color:var(--cream-2);margin-left:8px}.replay:hover{color:var(--cream)}
 .mh{display:none}@media (max-width:820px){.dh{display:none}.mh{display:inline}}
-.hero .axis{position:fixed;left:0;right:0;bottom:calc(env(safe-area-inset-bottom,0px) + 12px);display:flex;justify-content:space-between;padding:0 var(--pad);font-size:11px;color:var(--cream-2);opacity:.7;letter-spacing:.06em;z-index:3;pointer-events:none;transition:opacity .6s}
-.hero .legend{position:absolute;right:var(--pad);top:calc(env(safe-area-inset-top,0px) + clamp(56px,10vh,110px));display:grid;gap:6px;font-size:12px;color:var(--cream-2);pointer-events:none}
+.hero .axis span{position:absolute;transform:translateX(-50%);transition:opacity .3s}
+.hero .axis{position:fixed;left:0;right:0;bottom:calc(env(safe-area-inset-bottom,0px) + 12px);height:16px;font-size:11px;color:var(--cream-2);opacity:.7;letter-spacing:.06em;z-index:3;pointer-events:none;transition:opacity .6s}
+.hero .legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:22px;font-size:12px;color:var(--cream-2);max-width:640px}
 .legend span::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--lc);box-shadow:0 0 8px var(--lc);margin-right:9px;vertical-align:middle}
-@media (max-width:820px){.hero .legend{display:none}.hero .axis{display:none}}
+@media (max-width:820px){.hero .legend{gap:6px 14px;font-size:11px;max-width:none}}
 
 /* voices */
 .voice .glass{max-width:620px}
@@ -118,17 +122,29 @@ h2{font-family:var(--serif);font-weight:400;font-size:clamp(26px,3.6vw,40px);lin
 .empty{color:var(--cream-2);font-size:14px;padding:18px 0;border-top:1px solid var(--line)}
 
 /* about */
-.about .glass{max-width:960px;display:grid;gap:40px}
-@media (min-width:821px){.about .glass{grid-template-columns:1.1fr 1fr}}
-.about .rec{font-family:var(--serif);font-size:clamp(16px,1.8vw,19px);line-height:1.85;text-wrap:pretty}
-.about h3{font-family:var(--serif);font-weight:400;font-size:18px;margin:26px 0 8px;color:var(--cream)}
+.about .glass{max-width:1000px;display:grid;gap:36px;padding:clamp(28px,4vw,52px)}
+@media (min-width:821px){.about .glass{grid-template-columns:340px 1fr;column-gap:56px;align-items:start}}
+.bookcol{display:flex;justify-content:center;align-items:center;position:relative;padding:12px 0}
+.book3d{position:relative;width:min(300px,70vw);filter:drop-shadow(0 30px 40px rgba(0,0,0,.6)) drop-shadow(0 0 30px rgba(240,160,60,.12));animation:float 7s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-10px) rotate(0deg)}}
+@media (prefers-reduced-motion:reduce){.book3d{animation:none}}
+.aboutcol .k{margin-bottom:10px}
+.about .rec{font-family:var(--serif);font-size:clamp(17px,1.9vw,21px);line-height:1.8;text-wrap:pretty;color:var(--cream)}
+.about .recby{font-size:13px;color:var(--cream-2);margin-top:10px}
+.about h3{font-family:var(--serif);font-weight:400;font-size:17px;margin:30px 0 8px;color:var(--cream);padding-top:18px;border-top:1px solid var(--line)}
 .about p{color:var(--cream-2);font-size:14px}
-.people{display:grid;gap:14px}.people b{font-weight:500;color:var(--cream)}.people b small{font-family:var(--serif);font-weight:400;color:var(--cream-2);margin-left:8px;font-size:13px}
-.people p{font-size:13px}
-.cover{width:140px;border-radius:2px;box-shadow:0 20px 50px rgba(0,0,0,.5);margin-bottom:22px}
-.buy{grid-column:1/-1;padding-top:22px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:10px 30px;font-size:13px;color:var(--cream-2)}
-.buy b{font-family:var(--serif);font-weight:400;font-size:20px;color:var(--cream)}
-footer{position:relative;z-index:2;padding:30px var(--pad) 90px;padding-left:calc(var(--pad) + 40px);font-size:12px;color:var(--cream-2);display:flex;flex-wrap:wrap;gap:6px 26px}
+.people{display:grid;gap:8px 20px;margin-top:4px}
+@media (min-width:600px){.people{grid-template-columns:1fr 1fr}}
+.people b{font-weight:500;color:var(--cream);font-size:14px}.people b small{font-family:var(--serif);font-weight:400;color:var(--cream-2);margin-left:6px;font-size:12px}
+.people p{font-size:12.5px;line-height:1.5}
+.buyrow{grid-column:1/-1;margin-top:8px;padding-top:26px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:18px 32px;align-items:center;justify-content:space-between}
+.buymeta{display:grid;gap:2px;font-size:13px;color:var(--cream-2)}
+.buymeta b{font-family:var(--serif);font-weight:400;font-size:22px;color:var(--cream);margin-bottom:4px}
+.shops{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.shops .shop{display:inline-flex;align-items:center;justify-content:center;height:44px;padding:0 18px;border-radius:999px;background:#fff;transition:transform .2s,box-shadow .2s}
+.shops .shop:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.shops .shop img{height:22px;width:auto;display:block}
+footer{position:relative;z-index:2;pointer-events:auto;padding:30px var(--pad) 90px;padding-left:calc(var(--pad) + 40px);font-size:12px;color:var(--cream-2);display:flex;flex-wrap:wrap;gap:6px 26px}
 @media (max-width:820px){footer{padding-left:var(--pad)}}
 
 /* reader panel */
@@ -160,10 +176,11 @@ footer{position:relative;z-index:2;padding:30px var(--pad) 90px;padding-left:cal
 
 <main>
 <section class="sec hero" id="top" data-cam="all" data-temp="24" data-color="var(--c3)">
-  <div class="legend" id="legend"></div>
   <div class="in">
     <h1>청춘의<br>온도</h1>
     <p>우리는 서로 다른 청춘을 살아가고 있다</p>
+    <a class="buylink" href="#about">책 구매 안내 ↓</a>
+    <div class="legend" id="legend"></div>
     <small id="fhelp">밤의 들판에 54개의 이야기가 빛나고 있습니다. <span class="dh">빛 위에 올려보고, 눌러서 읽어보세요.</span><span class="mh">좌우로 쓸어 넘기며 빛을 눌러보세요.</span> <button class="replay" id="replay" type="button">오프닝 다시 보기</button></small>
   </div>
   <div class="axis" id="axis"><span>0℃</span><span>10℃</span><span>20℃</span><span>30℃</span><span>40℃</span></div>
@@ -251,15 +268,14 @@ footer{position:relative;z-index:2;padding:30px var(--pad) 90px;padding-left:cal
 
 <section class="sec about" id="about" data-cam="all" data-temp="34" data-color="var(--c5)">
   <div class="glass">
-    <div>
-      <img class="cover" src="cover.jpg" alt="『청춘의 온도』 표지">
+    <div class="bookcol"><img class="book3d" src="book3d.png" alt="『청춘의 온도』 책"></div>
+    <div class="aboutcol">
+      <div class="k">이 책은</div>
       <p class="rec">"혼자라고 느꼈던 청춘에게 이 책을 건넨다. 또래의 목소리 속에서 또 다른 나를 만나고, 손익을 따지지 않아도 되는 공감과 연대가 아직 가능하다는 사실을 확인하시길."</p>
-      <p style="margin-top:10px">— 이해진, 충북대학교 사회과학대학 학장</p>
+      <p class="recby">— 이해진, 충북대학교 사회과학대학 학장</p>
       <h3>AI 구술생애사</h3>
       <p>충북대학교 사회과학대학 학생 다섯 명이 또래를 직접 인터뷰하고, 생성형 AI 도구로 구술을 정리한 뒤 저자가 검수하고 다듬었습니다. 청년이 청년의 삶을 스스로 기록한 다섯 꼭지입니다. 레페토 AI가 기술 교육과 출판을 함께했습니다.</p>
-    </div>
-    <div>
-      <h3 style="margin-top:0">다섯 명의 저자</h3>
+      <h3>다섯 명의 저자</h3>
       <div class="people">
         <div><b>유효정 <small>나의 방황은</small></b><p>방황을 이 시대의 보편적인 성장통으로 마주하는 데 작은 디딤돌이 되기를.</p></div>
         <div><b>임예은 <small>특별하게, 나를 알아가는 중입니다</small></b><p>세상에 당연한 것은 없다는 사실을 마음에 새기며.</p></div>
@@ -268,11 +284,18 @@ footer{position:relative;z-index:2;padding:30px var(--pad) 90px;padding-left:cal
         <div><b>이환희 <small>우리의 사랑이 부정될 때</small></b><p>사랑하고 싶은 걸 마음껏 사랑하길 바랍니다.</p></div>
       </div>
     </div>
-    <div class="buy"><b>청춘의 온도</b><span>유효정 · 임예은 · 이환희 · 김윤정 · 성지은 지음</span><span>18,000원</span><span>ISBN 979-11-992779-9-1</span><span>2026년 9월 · 레페토 AI</span></div>
+    <div class="buyrow">
+      <div class="buymeta"><b>청춘의 온도</b><span>유효정 · 임예은 · 이환희 · 김윤정 · 성지은 지음</span><span>18,000원 · ISBN 979-11-992779-9-1 · 2026년 9월 · 레페토 AI</span></div>
+      <div class="shops">
+        <a class="shop" href="https://product.kyobobook.co.kr/detail/S000221572803" target="_blank" rel="noopener" aria-label="교보문고에서 구매"><img src="logo-kyobo.png" alt="교보문고"></a>
+        <a class="shop" href="https://www.yes24.com/product/goods/197683501" target="_blank" rel="noopener" aria-label="예스24에서 구매"><img src="logo-yes24.png" alt="예스24"></a>
+        <a class="shop" href="https://aladin.kr/p/fhdgg" target="_blank" rel="noopener" aria-label="알라딘에서 구매"><img src="logo-aladin.png" alt="알라딘"></a>
+      </div>
+    </div>
   </div>
 </section>
 </main>
-<footer><span>충북대학교 사회과학대학 × 레페토 AI</span><span>표지 그림은 AI로 제작되었습니다</span><span>contact@repetoai.com</span></footer>
+<footer><span><a href="#about" style="text-decoration:none;border-bottom:1px solid var(--line)">책 구매 안내</a></span><span>충북대학교 사회과학대학 × 레페토 AI</span><span>표지 그림은 AI로 제작되었습니다</span><span>contact@repetoai.com</span></footer>
 
 <aside class="panel" id="panel" aria-hidden="true"><div class="panel-in">
   <button class="pclose" id="pclose" aria-label="닫기">×</button>
@@ -319,7 +342,7 @@ footer{position:relative;z-index:2;padding:30px var(--pad) 90px;padding-left:cal
       return {e,wx:xOf(e.t),wy:top+(bot-top)*(base+(rnd(e.i*7)-0.5)*0.7),r:mobile?4.5:5.5+Math.min(3,e.paras.length/12),ph:rnd(e.i*3)*6.28,sp:0.4+rnd(e.i*5)*0.5,rgb:hexRGB(CHN[e.ch].c),c:CHN[e.ch].c,glow:0};});
     noteNodes.forEach(m=>{m.wx=xOf(m.n.temp);});
     // cameras: 'all' fits the world; chapter cams centre on that chapter's cluster
-    CAMS.all=mobile?{x:xOf(9),s:0.85}:{x:WORLD/2,s:W/WORLD};
+    CAMS.all=mobile?{x:xOf(9),s:0.85}:(()=>{const sc=W*0.58/WORLD;return {x:WORLD/2-W*0.19/sc,s:sc};})();
     ['v1','v2','v3','v4','v5'].forEach(k=>{const ns=nodes.filter(m=>m.e.ch===k);const xs=ns.map(m=>m.wx);const cxm=(Math.min(...xs)+Math.max(...xs))/2;const span=Math.max(...xs)-Math.min(...xs)+W*0.5;CAMS[k]={x:cxm,s:Math.min(1.6,Math.max(0.9,W/span))};});
     CAMS.notes={x:xOf(24),s:Math.min(1,W/(WORLD*0.6))};
     if(!cam.init){cam={init:true,x:xOf(mobile?0:3),s:mobile?1.15:1.25};camT=Object.assign({},CAMS.all);introFrom={x:cam.x,s:cam.s};}
@@ -351,7 +374,7 @@ footer{position:relative;z-index:2;padding:30px var(--pad) 90px;padding-left:cal
   function blob(x,y,rad,rgb,a){const g=cx.createRadialGradient(x,y,0,x,y,rad);g.addColorStop(0,rgba(rgb,a));g.addColorStop(0.45,rgba(rgb,a*0.35));g.addColorStop(1,rgba(rgb,0));cx.fillStyle=g;cx.fillRect(x-rad,y-rad,rad*2,rad*2);}
   const ambWrap=$('amb');let ambNext=performance.now()+2000,ambs=[],sparkNext=0;
   function bestPos(m,el){const bw=el.offsetWidth||190,bh=el.offsetHeight||70,g=18;const cands=[{dx:g,dy:-bh/2,cls:'r'},{dx:-g-bw,dy:-bh/2,cls:'l'},{dx:-bw/2,dy:-g-bh,cls:'u'},{dx:-bw/2,dy:g,cls:'d'}];let best=null;
-    cands.forEach(c=>{const x0=m.x+c.dx,y0=m.y+c.dy,x1=x0+bw,y1=y0+bh;if(x0<8||x1>W-8||y0<H*0.08||y1>H-60)return;let cost=0;nodes.forEach(o=>{if(o!==m&&o.x>x0-10&&o.x<x1+10&&o.y>y0-10&&o.y<y1+10)cost+=3;});if(!best||cost<best.cost)best={...c,cost};});return best||cands[0];}
+    cands.forEach(c=>{const x0=m.x+c.dx,y0=m.y+c.dy,x1=x0+bw,y1=y0+bh;if(x0<8||x1>W-8||y0<H*0.08||y1>H-60)return;let cost=0;nodes.forEach(o=>{if(o!==m&&o.x>x0-10&&o.x<x1+10&&o.y>y0-10&&o.y<y1+10)cost+=3;});if(!best||cost<best.cost)best={...c,cost};});if(!best){best={...cands[0]};best.dx=Math.min(best.dx,W-8-bw-m.x);best.dx=Math.max(best.dx,8-m.x);}return best;}
   function ambient(now){
     if(now>sparkNext&&!reduce){sparkNext=now+900+Math.random()*1400;const m=nodes[Math.floor(Math.random()*nodes.length)];if(m&&!(m.spark>now)&&m.x>0&&m.x<W)m.spark=now+700;}
     const heroIn=scrollY<H*0.9;
@@ -400,7 +423,8 @@ footer{position:relative;z-index:2;padding:30px var(--pad) 90px;padding-left:cal
     else{tip.classList.remove('on');cv.style.cursor='crosshair';}
     if(hover||hn){const t=hover?hover.m.e.t:hn.m.n.temp;read.textContent=t.toFixed(1)+' ℃';mercury.style.height=(t/40*100)+'%';mercury.style.setProperty('--w',(t/40*100)+'%');document.documentElement.style.setProperty('--t',hover?hover.m.c:hn.m.c);}
     ambient(now);
-    axis.style.opacity=scrollY<H*0.6?0.7:0;
+    {const q=document.getElementById('quiz');const start=q.offsetTop-H*1.05,end=q.offsetTop-H*0.55;const p=Math.max(0,Math.min(1,(scrollY-start)/(end-start)));cv.style.opacity=(1-p).toFixed(3);if(p>=1){requestAnimationFrame(draw);return;}}
+    axis.style.opacity=scrollY<H*0.6?0.7:0;[...axis.children].forEach((el,i)=>{const x=sx(window.__xOf(i*10));el.style.left=x+'px';el.style.opacity=(x<30||x>W-30)?0:1;});
     requestAnimationFrame(draw);
   }
   function tipAt(x,y){const half=Math.min(140,W*0.4);tip.style.maxWidth=(half*2)+'px';tip.style.left=Math.max(half+8,Math.min(W-half-8,x))+'px';tip.style.top=y+'px';tip.classList.add('on');}
@@ -423,7 +447,7 @@ footer{position:relative;z-index:2;padding:30px var(--pad) 90px;padding-left:cal
   // camera + temperature follow the section in view
   const SECS=[...document.querySelectorAll('[data-cam]')];let curSec=null;
   function updateSection(){const mid=innerHeight*0.5;let best=null,bd=1e9;SECS.forEach(s=>{const r=s.getBoundingClientRect();const d=r.top<=mid&&r.bottom>=mid?0:Math.min(Math.abs(r.top-mid),Math.abs(r.bottom-mid));if(d<bd){bd=d;best=s;}});
-    if(best&&best!==curSec){curSec=best;setTemp(best.dataset.temp,best.dataset.color);if(pinCam)return;manual=false;camT=Object.assign({},CAMS[best.dataset.cam]||CAMS.all);}}
+    if(best&&best!==curSec){curSec=best;document.body.classList.toggle('quiet',['about','quiz','notes'].includes(best.id));setTemp(best.dataset.temp,best.dataset.color);if(pinCam)return;manual=false;camT=Object.assign({},CAMS[best.dataset.cam]||CAMS.all);}}
   addEventListener('scroll',updateSection,{passive:true});addEventListener('resize',()=>{curSec=null;updateSection();});updateSection();
 
   /* ---------- reader panel ---------- */
