@@ -73,7 +73,7 @@ h2{font-family:var(--serif);font-weight:400;font-size:clamp(26px,3.6vw,40px);lin
 .mh{display:none}@media (max-width:820px){.dh{display:none}.mh{display:inline}}
 .hero .axis span{position:absolute;transform:translateX(-50%);transition:opacity .3s}
 .hero .axis{position:fixed;left:0;right:0;bottom:calc(env(safe-area-inset-bottom,0px) + 12px);height:16px;font-size:11px;color:var(--cream-2);opacity:.7;letter-spacing:.06em;z-index:3;pointer-events:none;transition:opacity .6s}
-.hero .legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:22px;font-size:12px;color:var(--cream-2);max-width:640px}
+.hero .legend{display:grid;gap:7px;margin-top:22px;font-size:12px;color:var(--cream-2);max-width:640px}
 .legend span::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--lc);box-shadow:0 0 8px var(--lc);margin-right:9px;vertical-align:middle}
 @media (max-width:820px){.hero .legend{gap:6px 14px;font-size:11px;max-width:none}}
 
@@ -91,6 +91,10 @@ h2{font-family:var(--serif);font-weight:400;font-size:clamp(26px,3.6vw,40px);lin
 .voice .eps button i{font-style:normal;color:var(--vc);margin-right:6px;font-family:var(--serif)}
 
 /* quiz */
+.duo{min-height:0;align-content:start}
+.duo-grid{display:grid;gap:24px;max-width:1120px;width:100%;justify-self:center}
+@media (min-width:1000px){.duo-grid{grid-template-columns:1fr 1fr;align-items:start}}
+.duo .glass{max-width:none}
 .quiz .q{font-family:var(--serif);font-size:clamp(19px,2.4vw,24px);line-height:1.5;min-height:3em;margin-top:14px}
 .quiz .prog{font-size:12px;color:var(--cream-2);letter-spacing:.1em}
 .quiz .opts{display:grid;gap:10px;margin-top:20px}
@@ -122,7 +126,7 @@ h2{font-family:var(--serif);font-weight:400;font-size:clamp(26px,3.6vw,40px);lin
 .empty{color:var(--cream-2);font-size:14px;padding:18px 0;border-top:1px solid var(--line)}
 
 /* about */
-.about .glass{max-width:1000px;display:grid;gap:36px;padding:clamp(28px,4vw,52px)}
+.about .glass{max-width:1120px;width:100%;justify-self:center;display:grid;gap:36px;padding:clamp(28px,4vw,52px)}
 @media (min-width:821px){.about .glass{grid-template-columns:340px 1fr;column-gap:56px;align-items:start}}
 .bookcol{display:flex;justify-content:center;align-items:center;position:relative;padding:12px 0}
 .book3d{position:relative;width:min(300px,70vw);filter:drop-shadow(0 30px 40px rgba(0,0,0,.6)) drop-shadow(0 0 30px rgba(240,160,60,.12));animation:float 7s ease-in-out infinite}
@@ -133,8 +137,7 @@ h2{font-family:var(--serif);font-weight:400;font-size:clamp(26px,3.6vw,40px);lin
 .about .recby{font-size:13px;color:var(--cream-2);margin-top:10px}
 .about h3{font-family:var(--serif);font-weight:400;font-size:17px;margin:30px 0 8px;color:var(--cream);padding-top:18px;border-top:1px solid var(--line)}
 .about p{color:var(--cream-2);font-size:14px}
-.people{display:grid;gap:8px 20px;margin-top:4px}
-@media (min-width:600px){.people{grid-template-columns:1fr 1fr}}
+.people{display:grid;gap:10px;margin-top:4px}
 .people b{font-weight:500;color:var(--cream);font-size:14px}.people b small{font-family:var(--serif);font-weight:400;color:var(--cream-2);margin-left:6px;font-size:12px}
 .people p{font-size:12.5px;line-height:1.5}
 .buyrow{grid-column:1/-1;margin-top:8px;padding-top:26px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:18px 32px;align-items:center;justify-content:space-between}
@@ -236,11 +239,12 @@ footer{position:relative;z-index:2;pointer-events:auto;padding:30px var(--pad) 9
   </div>
 </section>
 
-<section class="sec quiz right" id="quiz" data-cam="all" data-temp="24" data-color="var(--c3)">
-  <div class="glass">
+<section class="sec duo" id="interact" data-cam="all" data-temp="24" data-color="var(--c3)">
+  <div class="duo-grid">
+  <div class="glass quiz" id="quiz">
     <div class="k">온도 재기</div>
     <h2>지금 당신의 온도는<br>몇 도인가요?</h2>
-    <div id="qstart"><p class="q">다섯 개의 질문. 정답은 없고, 온도는 언제든 바뀝니다.</p><button class="btn pri" id="btnStart">온도 재기</button></div>
+    <div id="qstart"><p class="q">다섯 개의 질문.<br>정답은 없고, 온도는 언제든 바뀝니다.</p><button class="btn pri" id="btnStart" style="margin-top:26px">온도 재기</button></div>
     <div id="qplay" style="display:none"><div class="prog" id="prog"></div><p class="q" id="qtext"></p><div class="opts" id="opts"></div></div>
     <div class="result" id="result">
       <div class="big"><span id="rtemp">0</span><span>℃</span></div>
@@ -249,10 +253,7 @@ footer{position:relative;z-index:2;pointer-events:auto;padding:30px var(--pad) 9
       <p class="hint" id="rhint"></p>
     </div>
   </div>
-</section>
-
-<section class="sec notes" id="notes" data-cam="notes" data-temp="29" data-color="var(--c4)">
-  <div class="glass">
+  <div class="glass notes" id="notes">
     <div class="k">온도 남기기</div>
     <h2>당신의 온도를<br>한 줄 남겨주세요</h2>
     <p class="muted" style="margin-top:12px">남긴 한 줄은 이 들판에 새로운 빛이 되어 저자들의 이야기 곁에 떠오릅니다.</p>
@@ -264,9 +265,11 @@ footer{position:relative;z-index:2;pointer-events:auto;padding:30px var(--pad) 9
     </form>
     <div class="list" id="list"></div>
   </div>
+  </div>
 </section>
 
-<section class="sec about" id="about" data-cam="all" data-temp="34" data-color="var(--c5)">
+
+<section class="sec about" id="about" style="min-height:0;padding-top:24px" data-cam="all" data-temp="34" data-color="var(--c5)">
   <div class="glass">
     <div class="bookcol"><img class="book3d" src="book3d.png" alt="『청춘의 온도』 책"></div>
     <div class="aboutcol">
@@ -423,7 +426,7 @@ footer{position:relative;z-index:2;pointer-events:auto;padding:30px var(--pad) 9
     else{tip.classList.remove('on');cv.style.cursor='crosshair';}
     if(hover||hn){const t=hover?hover.m.e.t:hn.m.n.temp;read.textContent=t.toFixed(1)+' ℃';mercury.style.height=(t/40*100)+'%';mercury.style.setProperty('--w',(t/40*100)+'%');document.documentElement.style.setProperty('--t',hover?hover.m.c:hn.m.c);}
     ambient(now);
-    {const q=document.getElementById('quiz');const start=q.offsetTop-H*1.05,end=q.offsetTop-H*0.55;const p=Math.max(0,Math.min(1,(scrollY-start)/(end-start)));cv.style.opacity=(1-p).toFixed(3);if(p>=1){requestAnimationFrame(draw);return;}}
+    {const q=document.getElementById('interact');const start=q.offsetTop-H*1.05,end=q.offsetTop-H*0.55;const p=Math.max(0,Math.min(1,(scrollY-start)/(end-start)));cv.style.opacity=(1-p).toFixed(3);if(p>=1){requestAnimationFrame(draw);return;}}
     axis.style.opacity=scrollY<H*0.6?0.7:0;[...axis.children].forEach((el,i)=>{const x=sx(window.__xOf(i*10));el.style.left=x+'px';el.style.opacity=(x<30||x>W-30)?0:1;});
     requestAnimationFrame(draw);
   }
@@ -447,7 +450,7 @@ footer{position:relative;z-index:2;pointer-events:auto;padding:30px var(--pad) 9
   // camera + temperature follow the section in view
   const SECS=[...document.querySelectorAll('[data-cam]')];let curSec=null;
   function updateSection(){const mid=innerHeight*0.5;let best=null,bd=1e9;SECS.forEach(s=>{const r=s.getBoundingClientRect();const d=r.top<=mid&&r.bottom>=mid?0:Math.min(Math.abs(r.top-mid),Math.abs(r.bottom-mid));if(d<bd){bd=d;best=s;}});
-    if(best&&best!==curSec){curSec=best;document.body.classList.toggle('quiet',['about','quiz','notes'].includes(best.id));setTemp(best.dataset.temp,best.dataset.color);if(pinCam)return;manual=false;camT=Object.assign({},CAMS[best.dataset.cam]||CAMS.all);}}
+    if(best&&best!==curSec){curSec=best;document.body.classList.toggle('quiet',['about','interact'].includes(best.id));setTemp(best.dataset.temp,best.dataset.color);if(pinCam)return;manual=false;camT=Object.assign({},CAMS[best.dataset.cam]||CAMS.all);}}
   addEventListener('scroll',updateSection,{passive:true});addEventListener('resize',()=>{curSec=null;updateSection();});updateSection();
 
   /* ---------- reader panel ---------- */
@@ -494,7 +497,7 @@ footer{position:relative;z-index:2;pointer-events:auto;padding:30px var(--pad) 9
   function show(){$('prog').textContent=(qi+1)+' / '+Q.length;$('qtext').textContent=Q[qi].q;const o=$('opts');o.innerHTML='';Q[qi].o.forEach(([txt,t,ch])=>{const b=document.createElement('button');b.textContent=txt;b.onclick=()=>{sum+=t;votes[ch]=(votes[ch]||0)+1;qi++;qi<Q.length?show():finish();};o.appendChild(b);});}
   function finish(){const avg=Math.round(sum/Q.length*10)/10;let best=null,bs=-1;Object.keys(CH).forEach(k=>{const s=(votes[k]||0)*100-Math.abs(CH[k].t-avg);if(s>bs){bs=s;best=k;}});res={temp:avg,ch:CH[best]};
     $('qplay').style.display='none';$('result').classList.add('on');$('rtemp').textContent=avg.toFixed(1);$('rtitle').textContent='「'+res.ch.title+'」 · '+res.ch.by;$('rline').textContent=res.ch.line;$('rdesc').textContent=res.ch.desc;$('btnGo').href='#'+res.ch.id;
-    $('quiz').dataset.temp=avg;$('quiz').dataset.color=CHN[res.ch.id].c;setTemp(avg,CHN[res.ch.id].c);$('tr').value=Math.min(40,Math.max(0,avg));$('tv').textContent=avg.toFixed(1);}
+    $('interact').dataset.temp=avg;$('interact').dataset.color=CHN[res.ch.id].c;setTemp(avg,CHN[res.ch.id].c);$('tr').value=Math.min(40,Math.max(0,avg));$('tv').textContent=avg.toFixed(1);}
   $('btnStart').onclick=()=>{$('qstart').style.display='none';$('qplay').style.display='block';qi=0;sum=0;votes={};show();};
   $('btnAgain').onclick=()=>{$('result').classList.remove('on');$('qplay').style.display='block';qi=0;sum=0;votes={};show();$('rhint').textContent='';};
   $('btnCopy').onclick=async()=>{const s='지금 나의 온도는 '+res.temp.toFixed(1)+'℃. 「'+res.ch.title+'」와 가장 가까운 온도. — 『청춘의 온도』';try{await navigator.clipboard.writeText(s);$('rhint').textContent='복사했어요. 스토리나 메시지에 붙여 넣으세요.';}catch{$('rhint').textContent=s;}};
